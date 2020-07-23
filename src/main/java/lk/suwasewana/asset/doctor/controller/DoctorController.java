@@ -73,10 +73,9 @@ public class DoctorController {
     // Above method support to send data to front end - All List, update, edit
     //Bellow method support to do back end function save, delete, update, search
 
-    @RequestMapping(value = {"/add", "/update"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/save", "/update"}, method = RequestMethod.POST)
     public String addDoctor(@Valid @ModelAttribute Doctor doctor, BindingResult result, Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Integer userId = userService.findByUserIdByUserName(auth.getName());
+        System.out.println("hahhahahhhaahhahahhahha");
         if (result.hasErrors()) {
             for (FieldError error : result.getFieldErrors()) {
                 System.out.println(error.getField() + ": " + error.getDefaultMessage());
@@ -95,7 +94,6 @@ public class DoctorController {
             return "redirect:/doctor";
         }
 
-        doctor.setCreateAt(dateTimeAgeService.getCurrentDate());
         doctorService.persist(doctor);
         return "redirect:/doctor";
     }

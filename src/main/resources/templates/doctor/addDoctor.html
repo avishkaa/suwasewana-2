@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head data-th-replace="~{fragments/header :: headerFragment}">
+    <meta charset="UTF-8">
+    <title>Thymeleaf Springboot </title>
+</head>
+<body>
+<nav data-th-replace="~{fragments/navBar :: navBarFragment}"></nav>
+<div class="container-fluid bg-primary">
+    <div class="panel panel-primary">
+        <div class="panel panel-heading text-center">
+            <h4><b><span data-th-text="${addStatus==true?'New Doctor Add':'Update Doctor'}"></span></b></h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-4 ">
+                    <a class="btn btn-primary" href="/home"> Return Home</a>
+                </div>
+                <div style="text-align: center;" class="col-sm-4">
+                    <h4 class="text-info"></h4>
+                </div>
+                <div class="col-sm-4 text-right">
+                    <a href="/doctor">
+                        <button class="btn btn-sm btn-primary"><span
+                                class="glyphicon glyphicon-list">&nbsp; View List </span></button>
+                    </a>
+                </div>
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="container-fluid">
+                    <form class="form-horizontal" data-th-action="${addStatus==true?'/doctor/save':'/doctor/update'}"
+                          data-th-object="${doctor}" data-th-method="POST">
+                        <div class="col-sm-6 text-center">
+                            <div class="form-group" data-th-if="${addStatus==false}">
+                                <label class="control-label col-md-4" for="slmcNumber">ID :</label>
+                                <div class="col-md-8">
+                                    <input  type="text" id="slmcNumber" placeholder="Enter SLMC number" class="form-control"
+                                           name="slmcNumber" data-th-field="*{slmcNumber}"/>
+                                    <span class="error" data-th-if="${#fields.hasErrors('id')}" data-th-errors="*{id}">Error ID</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-4" data-th-for="title">Title</label>
+                                <div class="col-md-4">
+                                    <select data-th-field="*{title}" class="form-control">
+                                        <option data-th-each="titles : ${title}"
+                                                data-th-text="${titles.title}"
+                                                data-th-value="${titles}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4" for="doctorName">Full Name<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-md-8">
+                                    <input type="text" id="doctorName" placeholder="Enter Full Here"
+                                           class="form-control" name="name" data-th-field="*{name}" required/>
+                                    <span class="error" data-th-if="${#fields.hasErrors('name')}"
+                                          data-th-errors="*{name}">Error Full Name</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6 text-center">
+                            <div class="form-group">
+                                <label class="control-label col-md-4" data-th-for="${'dateOfBirth'}">Birth Date<span
+                                        class="text-danger">*</span></label>
+
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4" data-th-for="gender">Gender</label>
+                                <div class="col-md-4">
+                                    <select id="gender" data-th-field="*{gender}" class="form-control">
+                                        <option data-th-each="genders : ${gender}"
+                                                data-th-text="${genders.gender}"
+                                                data-th-value="${genders}"></option>
+                                    </select>
+                                    <span class="error" data-th-if="${#fields.hasErrors('gender')}"
+                                          data-th-errors="*{gender}">Error Gender</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4" for="mobile">Email</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="email" placeholder="Enter email Here" class="form-control"
+                                           name="email" data-th-field="*{email}"/>
+                                    <span class="error" data-th-if="${#fields.hasErrors('email')}"
+                                          data-th-errors="*{email}">Error Email</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4" for="mobile">Mobile Number<span
+                                        class="text-danger">*</span></label>
+                                <div class="col-md-8">
+                                    <input type="text" id="mobile" placeholder="Enter Mobile Here" class="form-control"
+                                           name="mobile" data-th-field="*{mobile}" required/>
+                                    <span class="error" data-th-if="${#fields.hasErrors('mobile')}"
+                                          data-th-errors="*{mobile}">Error Mobile Number</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4" for="land">Land Number</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="land" placeholder="Enter Land Here" class="form-control"
+                                           name="land" data-th-field="*{land}"/>
+                                    <span class="error" data-th-if="${#fields.hasErrors('land')}"
+                                          data-th-errors="*{land}">Error Land Number</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-center row">
+
+                            <a data-th-href="@{/doctor}">
+                                <button class="btn btn-dark mr-5" type="button"><span
+                                        class="glyphicon glyphicon-thumbs-up"></span>&nbsp; &nbsp;<span
+                                        data-th-text="${addStatus==true?'Save': 'Update'}"></span></button>
+                            </a>
+
+                            <button class="btn btn-warning mr-5" type="reset"><span
+                                    class="glyphicon glyphicon-thumbs-up"></span>&nbsp; &nbsp;<span
+                                    data-th-text="${addStatus==true?'Save': 'Update'}"></span></button>
+
+                            <button class="btn btn-success ml-3" type="submit"><span
+                                    class="glyphicon glyphicon-thumbs-up"></span>&nbsp; &nbsp;<span
+                                    data-th-text="${addStatus==true?'Save': 'Update'}"></span></button>
+                        </div>
+                        <label data-th-if="${#fields.hasErrors('*')}" data-th-text="'Errors: '">Errors: </label>
+                        <ul>
+                            <li data-th-each="err: ${#fields.errors('*')}" data-th-text="${err}"></li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--footer include-->
+<footer data-th-replace="~{fragments/footer :: footerFragment}"></footer>
+<!--script include-->
+<script data-th-replace="~{fragments/script :: scriptFragment}"></script>
+</body>
+</html>
